@@ -16,6 +16,23 @@ SELECT * FROM animals WHERE name <> 'Gabumon';
 
 SELECT * FROM animals WHERE weight_kg BETWEEN 10.4 AND 17.3;
 
+-- Start a transaction
+START TRANSACTION;
+
+-- Update the species column to "unspecified" for all animals
+UPDATE animals
+SET species = 'unspecified';
+
+-- Verify the change
+SELECT * FROM animals;
+
+-- Roll back the transaction
+ROLLBACK;
+
+-- Verify that the species column went back to the state before the transaction
+SELECT * FROM animals;
+
+
 -- Start a transaction for updating
 START TRANSACTION;
 
