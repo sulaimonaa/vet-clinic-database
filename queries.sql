@@ -122,3 +122,41 @@ FROM animals
 WHERE Year(date_of_birth) BETWEEN 1990 AND 2000
 GROUP BY species;
 
+SELECT a.name
+FROM animals a
+JOIN owners o ON a.owners_id = o.id
+WHERE o.full_name = 'Melody Pond';
+
+
+SELECT a.name
+FROM animals a
+JOIN species s ON a.species_id = s.id
+WHERE s.name = 'Pokemon';
+
+SELECT o.full_name, COALESCE(a.name, 'No animals') AS animal
+FROM owners o
+LEFT JOIN animals a ON o.id = a.owners_id;
+
+SELECT s.name AS species, COUNT(a.id) AS total_animals
+FROM species s
+LEFT JOIN animals a ON s.id = a.species_id
+GROUP BY s.name;
+
+SELECT a.name
+FROM animals a
+JOIN species s ON a.species_id = s.id
+JOIN owners o ON a.owners_id = o.id
+WHERE s.name = 'Digimon' AND o.full_name = 'Jennifer Orwell';
+
+SELECT a.name
+FROM animals a
+JOIN owners o ON a.owners_id = o.id
+LEFT JOIN animals e ON a.id = e.owners_id
+WHERE o.full_name = 'Dean Winchester' AND e.escape_attempts IS NULL;
+
+SELECT o.full_name, COUNT(a.id) AS total_animals
+FROM owners o
+LEFT JOIN animals a ON o.id = a.owners_id
+GROUP BY o.id
+ORDER BY total_animals DESC
+LIMIT 1;
