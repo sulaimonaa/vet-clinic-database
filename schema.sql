@@ -27,3 +27,27 @@ ALTER TABLE animals ADD COLUMN owners_id INT;
 
 ALTER TABLE animals ADD CONSTRAINT fk_owners FOREIGN KEY (owners_id) REFERENCES owners(id);
 
+-- Create the vets table
+CREATE TABLE vets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    age INT,
+    date_of_graduation DATE
+);
+
+-- Create the specializations table
+CREATE TABLE specializations (
+    vet_id INT,
+    specialization VARCHAR(255),
+    FOREIGN KEY (vet_id) REFERENCES vets(id)
+);
+
+-- Create the visits table
+CREATE TABLE visits (
+    animal VARCHAR(255),
+    vet_id INT,
+    visit_date DATE,
+    FOREIGN KEY (vet_id) REFERENCES vets(id)
+);
+
+
