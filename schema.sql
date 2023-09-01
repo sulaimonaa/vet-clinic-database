@@ -44,7 +44,7 @@ CREATE TABLE specializations (
 
 -- Create the visits table
 CREATE TABLE visits (
-    animal VARCHAR(255),
+    animal_id INT,
     vet_id INT,
     visit_date DATE,
     FOREIGN KEY (animal_id) REFERENCES animals(id),
