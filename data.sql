@@ -35,12 +35,12 @@ VALUES
     ('Jack Harkness', 38, '2008-06-08');
 
 -- Insert data for specializations
-INSERT INTO specializations (vet_id, specialization)
+INSERT INTO specializations (vet_id, species_id)
 VALUES
-    (1, 'Pokemon'),
-    (3, 'Digimon'),
-    (3, 'Pokemon'),
-    (4, 'Digimon');
+    (1, 1),
+    (3, 2),
+    (3, 1),
+    (4, 2);
 
 -- Insert data for visits
 INSERT INTO visits (animal, vet_id, visit_date)
