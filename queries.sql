@@ -1,5 +1,3 @@
-/*Queries that provide answers to the questions from all projects.*/
-
 SELECT *
 from animals
 WHERE name LIKE '%mon';
@@ -26,6 +24,12 @@ WHERE name <> 'Gabumon';
 SELECT *
 FROM animals
 WHERE weight_kg BETWEEN 10.4 AND 17.3;
+
+-- Start a transaction
+START TRANSACTION;
+-- Update the species column to "unspecified" for all animals
+UPDATE animals
+SET species = 'unspecified';
 
 SELECT * from animals WHERE name LIKE '%mon';
 
@@ -172,4 +176,58 @@ FROM owners o
     LEFT JOIN animals a ON o.id = a.owners_id
 GROUP BY o.id
 ORDER BY total_animals DESC
+LIMIT 1;
+SELECT v.animal
+FROM visits v
+    JOIN vets vet ON v.vet_id = vet.id
+WHERE vet.name = 'William Tatcher'
+ORDER BY v.visit_date DESC
+LIMIT 1;
+SELECT COUNT(DISTINCT v.animal)
+FROM visits v
+    JOIN vets vet ON v.vet_id = vet.id
+WHERE vet.name = 'Stephanie Mendez';
+SELECT v.name,
+    s.specialization
+FROM vets v
+    LEFT JOIN specializations s ON v.id = s.vet_id;
+SELECT v.animal
+FROM visits v
+    JOIN vets vet ON v.vet_id = vet.id
+WHERE vet.name = 'Stephanie Mendez'
+    AND v.visit_date BETWEEN '2020-04-01' AND '2020-08-30';
+SELECT v.animal
+FROM visits v
+GROUP BY v.animal
+ORDER BY COUNT(v.animal) DESC
+LIMIT 1;
+SELECT v.animal
+FROM visits v
+    JOIN vets vet ON v.vet_id = vet.id
+WHERE vet.name = 'Maisy Smith'
+ORDER BY v.visit_date ASC
+LIMIT 1;
+SELECT v.animal,
+    vet.name AS vet_name,
+    v.visit_date
+FROM visits v
+    JOIN vets vet ON v.vet_id = vet.id
+ORDER BY v.visit_date DESC
+LIMIT 1;
+SELECT COUNT(*) AS num_visits
+FROM visits v
+    JOIN vets vet ON v.vet_id = vet.id
+    JOIN specializations s ON vet.id = s.vet_id
+    JOIN animals a ON v.animal = a.name
+WHERE s.specialization IS NULL
+    OR s.specialization NOT LIKE CONCAT('%', a.species_id, '%');
+SELECT a.species_id,
+    COUNT(*) AS num_visits
+FROM visits v
+    JOIN vets vet ON v.vet_id = vet.id
+    JOIN specializations s ON vet.id = s.vet_id
+    JOIN animals a ON v.animal = a.name
+WHERE vet.name = 'Maisy Smith'
+GROUP BY a.species_id
+ORDER BY num_visits DESC
 LIMIT 1;
